@@ -1,0 +1,23 @@
+<md-dialog aria-label="Shop Dialog" class="shop-dialog">
+	<md-dialog-content>
+		<div>
+			<h2 class="heading">Shop</h2>
+			<form class="form">
+				<br>
+				<div>
+					<slick settings="slickConfig" class="shop-container">
+						<div class="shop-item" ng-repeat="item in shopItems" >
+							<p class="credit-amount"><i class="fa fa-rupee"></i> {{item.credit_amount}}</p>
+							<img src="images/one-coin.png" />
+							<p class="debit-amount"><i class="fa fa-rupee"></i> {{item.debit_amount}}</p>
+							<button class="btn-sub" ng-click="boughtShopItem(item)">PURCHASE</button>
+						</div>
+					</slick>
+                </div>
+			</form>
+        </div>
+        <div>
+            <a href="javascript:void(0)" ng-click="closeDialog()" class="btn-main">Close</a>
+        </div>
+	</md-dialog-content>
+</md-dialog>

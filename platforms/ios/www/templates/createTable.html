@@ -1,0 +1,30 @@
+<header class="top-button-bar">
+	<div class="right">
+
+	</div>
+</header>
+<div class="glow-particles"></div>
+<div class="window createTable" ng-controller='createTableCtrl'>
+	<div>
+		<h2 class="heading">CREATE TABLE</h2>
+		<div class="three-coins"></div>
+		<form class="form">
+			<div>
+				<input type="text" id="txtName" ng-model="table.name" placeholder="Table Name">
+			</div>
+			<div>
+				<input type="text" id="txtBootAmount" ng-model="table.bootAmount" placeholder="Boot Amount">
+			</div>
+			<div>
+				<input type="text" id="txtMinPlayers" ng-model="table.minPlayers" placeholder="Min Players">
+			</div>
+			<div>
+				<input type="text"  id="txtMaxPlayers" ng-model="table.maxPlayers" placeholder="Max Players">
+			</div>
+			<div class="button-bar">
+				<a href="#/tables" class="btn-main" style="float: right;">CANCEL</a>
+				<button type="button" class="btn-helper" ng-click="createTable()" style="float: right;">CREATE</button>
+			</div>
+		</form>
+	</div>
+</div>

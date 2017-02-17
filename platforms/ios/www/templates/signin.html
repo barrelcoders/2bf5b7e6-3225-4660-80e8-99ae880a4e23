@@ -1,0 +1,24 @@
+<header class="top-button-bar">
+	<div class="right">
+		<a href="javascript:void(0)" ng-click="goSignUp()" class="btn-helper">Sign Up</a>
+	</div>
+</header>
+<div class="glow-particles"></div>
+<div class="window signin" ng-controller='signInCtrl'>
+	<div>
+		<h2 class="heading">Sign In</h2>
+		<form ng-submit="signin()" class="form">
+			<div>
+				<input type="email" id="txtEmail" placeholder="Enter email" ng-model="user.email">
+			</div>
+			<div>
+				<input type="password" id="txtPassword" placeholder="Password" ng-model="user.password">
+			</div>
+			<div class="button-bar">
+				<button type="submit" ng-click="signin()" class="btn-helper">Sign In</button>
+				<button type="button" ng-click="signInUsingFB()" class="btn-main">Sign In using Facebook</button>
+			</div>
+		</form>
+		<div class="three-coins"></div>
+	</div>
+</div>

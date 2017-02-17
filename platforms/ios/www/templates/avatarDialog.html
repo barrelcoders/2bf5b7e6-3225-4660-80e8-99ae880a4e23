@@ -1,0 +1,55 @@
+<md-dialog aria-label="Avatar Dialog" class="avatar-dialog">
+    <md-dialog-content>
+        <div>
+            <h2 class="heading">CHANGE AVATAR:</h2>
+            <form class="form">
+                <div class="character-container">
+                    <div>
+                        <div class="character add" ng-class="{'uploadingStarted': uploadingStart}">
+                            <form name="up.upload_form">
+                                <span useravatarfile  ng-click="addUserAvatar()">+</span>
+                                <input type="file" id="upload" ngf-select ng-model="up.file" name="file" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="20MB" ng-show="false" ng-change="uploadAvatar()"/>
+                                <i ng-show="up.upload_form.file.$error.required">*required</i><br>
+                                <i ng-show="up.upload_form.file.$error.maxSize">File too large {{up.file.size / 1000000|number:1}}MB: max 20M</i>
+                                <p>{{up.progress}}</p>
+                            </form>
+                        </div>
+                        <div class="character" style="background: url(images/characters.jpg) -22px -21px no-repeat;" image="background: url(../images/characters.jpg) -22px -21px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -172px -21px no-repeat;" image="background: url(../images/characters.jpg) -172px -21px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -318px -21px no-repeat;" image="background: url(../images/characters.jpg) -318px -21px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -469px -21px no-repeat;" image="background: url(../images/characters.jpg) -469px -21px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -617px -21px no-repeat;" image="background: url(../images/characters.jpg) -617px -21px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -26px -174px no-repeat;" image="background: url(../images/characters.jpg) -26px -174px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -188px -170px no-repeat;" image="background: url(../images/characters.jpg) -188px -170px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -326px -188px no-repeat;" image="background: url(../images/characters.jpg) -326px -188px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -484px -188px no-repeat;" image="background: url(../images/characters.jpg) -484px -188px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -626px -174px no-repeat;" image="background: url(../images/characters.jpg) -626px -174px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -33px -330px  no-repeat;" image="background: url(../images/characters.jpg) -33px -330px  no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -166px -330px no-repeat;" image="background: url(../images/characters.jpg) -166px -330px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -328px -330px no-repeat;" image="background: url(../images/characters.jpg) -328px -330px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -472px -330px no-repeat;" image="background: url(../images/characters.jpg) -472px -330px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -625px -330px no-repeat;" image="background: url(../images/characters.jpg) -625px -330px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -22px -500px no-repeat;" image="background: url(../images/characters.jpg) -22px -500px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -170px -500px no-repeat;" image="background: url(../images/characters.jpg) -170px -500px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -320px -500px no-repeat;" image="background: url(../images/characters.jpg) -320px -500px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -470px -500px no-repeat;" image="background: url(../images/characters.jpg) -470px -500px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -622px -500px no-repeat;" image="background: url(../images/characters.jpg) -622px -500px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -21px -670px no-repeat;" image="background: url(../images/characters.jpg) -21px -670px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -168px -670px no-repeat;" image="background: url(../images/characters.jpg) -168px -670px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -318px -670px no-repeat;" image="background: url(../images/characters.jpg) -318px -670px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -465px -670px no-repeat;" image="background: url(../images/characters.jpg) -465px -670px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -612px -670px no-repeat;" image="background: url(../images/characters.jpg) -612px -670px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -26px -837px no-repeat;" image="background: url(../images/characters.jpg) -26px -837px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -175px -837px no-repeat;" image="background: url(../images/characters.jpg) -175px -837px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -327px -837px no-repeat;" image="background: url(../images/characters.jpg) -327px -837px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -475px -837px no-repeat;" image="background: url(../images/characters.jpg) -475px -837px no-repeat;" ng-click="changeAvatar($event)"></div>
+                        <div class="character" style="background: url(images/characters.jpg) -625px -837px no-repeat;" image="background: url(../images/characters.jpg) -625px -837px no-repeat;"ng-click="changeAvatar($event)"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div>
+            <a href="javascript:void(0)" ng-click="closeDialog()" class="btn-main">Close</a>
+        </div>
+    </md-dialog-content>
+</md-dialog>

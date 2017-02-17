@@ -1,0 +1,35 @@
+<div ng-controller='tablesCtrl'>
+	<header class="top-button-bar">
+		<div class="user image" style="{{user.avatar}}" ng-class="isCustomCharacter ? 'custom':'predefined'" ng-click="openUpdateAvatarDialog()"></div>
+		<div class="image" ng-style="background" ng-click="openChangeBackgroundDialog()"></div>
+		<div class="score"><i class="fa fa-rupee"></i> {{user.chips}}</div>
+		<div class="score" ng-click="openChangeNameDialog()">{{user.displayName}}</div>
+		<div class="right">
+			<a href="javascript:void(0)" ng-click="openShopDialog()" class="btn-main">Shop</a>
+			<a href="javascript:void(0)" ng-click="signOut()" class="btn-sub">Sign Out <i class="fa fa-sign-out"></i></a>
+		</div>
+	</header>
+</div>
+<div class="window large">
+	<h2 class="heading">SELECT ANY GAME:</h2>
+	<form class="form">
+		<br>
+		<br>
+		<br>
+		<div>
+			<slick settings="slickConfig" class="table-holder" ng-if="tables.length">
+				<div ng-repeat="tbl in tables" class="game-table" ng-class="{'custom': (tbl.type != 'SYSTEM')}">
+					<span class="name" ng-class="{'large': (tbl.name == 'ADD TABLE')}">{{tbl.name}}</span>
+					<span class="boot-amount" ng-show="tbl.boot_amount"><i class="fa fa-rupee"></i> {{tbl.boot_amount}}</span>
+					<span class="max-players" ng-show="tbl.max_players">{{tbl.max_players}} PLAYERS</span>
+					<button class="btn-sub" ng-click="playTable(tbl)">{{tbl.action}}</button>
+				</div>
+			</slick>
+		</div>
+	</form>
+</div>
+<div class="left-cards"></div>
+<div class="bottom-cards"></div>
+<div class="top-coin"></div>
+<div class="top-bottom-coin"></div>
+<div class="top-right-coin"></div>

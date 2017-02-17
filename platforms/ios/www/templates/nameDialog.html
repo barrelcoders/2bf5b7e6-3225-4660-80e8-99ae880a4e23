@@ -1,0 +1,17 @@
+<md-dialog aria-label="Name Dialog" class="name-dialog">
+    <md-dialog-content>
+        <div>
+            <h2 class="heading">CHANGE DISPLAY NAME:</h2>
+            <form class="form">
+                <br/>
+                <div>
+                    <input id="txtName" ng-model="user.displayName" type="text" ng-model="{{displayName}}" />
+                </div>
+                <div>
+                    <button type="button" class="btn-sub" ng-click="changeDisplayName()">Change</button>
+                    <a href="javascript:void(0)" ng-click="closeDialog()" class="btn-main">Close</a>
+                </div>
+            </form>
+        </div>
+    </md-dialog-content>
+</md-dialog>

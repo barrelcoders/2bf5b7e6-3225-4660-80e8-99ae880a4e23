@@ -1,0 +1,20 @@
+<md-dialog aria-label="Background Dialog" class="background-dialog">
+    <md-dialog-content>
+        <div>
+            <h2 class="heading">CHANGE BACKGROUND:</h2>
+            <form class="form">
+                <div>
+                    <slick settings="slickConfig" class="background-container">
+                        <div class="background" image="url(../images/background/background-1.jpg)" style="background-image: url(images/background/background-1.jpg);" ng-click="changeBackground($event)"></div>
+                        <div class="background" image="url(../images/background/background-2.jpg)" style="background-image: url(images/background/background-2.jpg);" ng-click="changeBackground($event)"></div>
+                        <div class="background" image="url(../images/background/background-3.jpg)" style="background-image: url(images/background/background-3.jpg);" ng-click="changeBackground($event)"></div>
+                        <div class="background" image="url(../images/background/background-4.jpg)" style="background-image: url(images/background/background-4.jpg);" ng-click="changeBackground($event)"></div>
+                    </slick>
+                </div>
+                <div>
+                    <a href="javascript:void(0)" ng-click="closeDialog()" class="btn-main">Close</a>
+                </div>
+            </form>
+        </div>
+   </md-dialog-content>
+</md-dialog>

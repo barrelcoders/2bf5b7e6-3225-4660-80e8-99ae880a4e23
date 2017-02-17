@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Play Table 99</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link rel="manifest" href="manifest.json">
+    <link href="ionic/css/ionic.css" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheets/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/slick.css">
+    <link rel="stylesheet" href="stylesheets/font-awesome.css">
+    <link rel="stylesheet" href="stylesheets/angular-material.min.css">
+    <link rel="stylesheet" href="stylesheets/loading-bar.min.css">
+    <link rel="stylesheet" href="stylesheets/style.css">
+        
+    <script src="javascripts/vendor/jquery-1.10.2.js"></script>
+    <script src="ionic/js/ionic.bundle.js"></script>
+    <script src="javascripts/vendor/bootstrap.js"></script>
+    <script src="javascripts/vendor/ui-bootstrap-0.12.0.min.js"></script>
+    <script src="javascripts/vendor/angular-ui-router.js"></script>
+    <script src="javascripts/vendor/slick.js"></script>
+    <script src="javascripts/vendor/loading-bar.min.js"></script>
+    <script src="javascripts/vendor/ngStorage.min.js"></script>
+    <script src="javascripts/vendor/ngFacebook.js"></script>
+    <script src="javascripts/vendor/angular-slick.js"></script>
+    <script src="javascripts/vendor/ng-file-upload.js"></script>
+    <script src="javascripts/vendor/angular-animate.min.js"></script>
+    <script src="javascripts/vendor/angular-aria.min.js"></script>
+    <script src="javascripts/vendor/angular-messages.min.js"></script>
+    <script src="javascripts/vendor/angular-material.min.js"></script>
+    
+    <script src="cordova.js"></script>
+    <script src="http://192.168.2.143:3000/socket.io/socket.io.js"></script><!--OFFICE-->
+    <!--<script src="http://192.168.0.104:3000/socket.io/socket.io.js"></script><!--PG-->
+    <script src="javascripts/socket.js"></script>
+    <script src="javascripts/main.js"></script>
+  </head>
+  <body ng-app="table99" class="table-99 {{layout}}" ng-style="background">
+    <div id='fb-root'></div>
+    <div class="container"><div ui-view ></div></div>
+    <audio id="buttonClickAudio" src="sounds/click.mp3"></audio>
+    <audio id="exitClickAudio" src="sounds/exit.mp3"></audio>
+    <audio id="applausedAudio" src="sounds/applaused.mp3"></audio>
+    <audio id="curseAudio" src="sounds/curse.mp3"></audio>
+    <audio id="alertAudio" src="sounds/alert.mp3"></audio>
+  </body>
+</html>

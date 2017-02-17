@@ -1,0 +1,18 @@
+<md-dialog aria-label="Share Dialog" class="share-dialog">
+    <md-dialog-content>
+        <div>
+            <h2 class="heading">Share:</h2>
+            <form class="form">
+                <div class="gifts-container">
+                    <div ng-repeat="gift in gifts" class="gift-item" ng-click="send(gift)">
+                        <div style="{{gift.image}}"></div>
+                        <span class="price" ><i class="fa fa-rupee"></i> {{gift.price}}</span>
+                    </div>
+                </div>
+                <div>
+                    <a href="javascript:void(0)" ng-click="closeDialog()" class="btn-main">Close</a>
+                </div>
+            </form>
+        </div>
+    </md-dialog-content>
+</md-dialog>
