@@ -3,7 +3,7 @@
 		<div class="user image" style="{{user.avatar}}" ng-class="isCustomCharacter ? 'custom':'predefined'" ng-click="openUpdateAvatarDialog()"></div>
 		<div class="image" ng-style="background" ng-click="openChangeBackgroundDialog()"></div>
 		<div class="score"><i class="fa fa-rupee"></i> {{user.chips}}</div>
-		<div class="score" ng-click="openChangeNameDialog()">{{user.displayName}}</div>
+		<div class="score name" ng-click="openChangeNameDialog()">{{user.displayName}}</div>
 		<div class="right">
 			<a href="javascript:void(0)" ng-click="openShopDialog()" class="btn-main">Shop</a>
 			<a href="javascript:void(0)" ng-click="signOut()" class="btn-sub">Sign Out <i class="fa fa-sign-out"></i></a>

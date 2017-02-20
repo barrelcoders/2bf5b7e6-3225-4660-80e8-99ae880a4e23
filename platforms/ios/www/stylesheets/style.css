@@ -426,9 +426,10 @@ audio{
   background: url(../images/loser.png) center no-repeat;
   font-size: 150px;
   padding-top: 100px;
-  z-index: 99;
+  z-index: 100;
   display: none;
   text-align: center;
+  text-shadow: 5px 5px #000;
 }
 .table.play .winner-text {
   position: fixed;
@@ -440,9 +441,10 @@ audio{
   background: url(../images/winner.png) center no-repeat;
   font-size: 150px;
   padding-top: 100px;
-  z-index: 99;
+  z-index: 100;
   text-align: center;
   display: none;
+  text-shadow: 5px 5px #000;
 }
 .table.play .seat {
   height: 160px;
@@ -1532,6 +1534,7 @@ audio{
   background-color: rgba(0, 0, 0, 0.3) !important;
   border: 2px Solid #5a5959 !important;
   color: #FFF !important;
+  z-index: 99;
 }
 
 md-dialog{
@@ -1598,7 +1601,13 @@ md-dialog h2{
   text-align: center;
   margin: 0;
 }
-
+#loading-bar .bar{
+    background: #FFF;
+}
+#loading-bar-spinner .spinner-icon {
+    border-top-color: #FFF;
+    border-left-color: #FFF;
+}
 /*and (-webkit-min-device-pixel-ratio: 3) or (-webkit-min-device-pixel-ratio: 2)*/
 
 @media only screen and (max-device-width: 736px) and (orientation: landscape)  {
@@ -1654,6 +1663,16 @@ md-dialog h2{
         height: 28px !important;
         line-height: 25px;
         padding: 0 10px;
+        max-width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 10px !important;
+        width: 100px;
+        text-align: center;
+    }
+    .top-button-bar .score.name{
+        width: 60px;
     }
     .btn-helper, .btn-main, .btn-sub {
         height: 30px;
@@ -1805,6 +1824,12 @@ md-dialog h2{
         height: 190px;
         width: 400px;
     }
+    .rules-container{
+        height: 130px;
+    }
+    .rules-container img{
+        width: 350px;
+    }
     md-dialog .btn-main{
         display: block;
         width: 60px;
@@ -1872,6 +1897,10 @@ md-dialog h2{
         top: 60px;
         height: 265px;
     }
+    md-dialog.rules-dialog{
+        height: 280px;
+        max-height: 280px;
+    }
     .table.play .seat{
        height: 100px;
     }
@@ -1902,7 +1931,7 @@ md-dialog h2{
         height: 100px
     }
     .table.play .winner-text, .table.play .loser-text{
-        font-size: 80px;
+        font-size: 70px;
     }
     .table.play .current-player-outer .current-player .info{
         width: 80px;
@@ -1912,6 +1941,9 @@ md-dialog h2{
         font-size: 10px;
         width: 130px;
         margin-top: -5px;
+    }
+    .table.play .current-player-outer .current-player .info .name{
+        margin-top: 15px;
     }
     .table.play .current-player-outer .current-player .info .chips{
         margin: 0;

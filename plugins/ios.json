@@ -21,7 +21,18 @@
         },
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.ionicframework.table99779826"
+        },
+        "cordova-plugin-media": {
+            "MICROPHONE_USAGE_DESCRIPTION": " ",
+            "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+        }
+    }
 }

@@ -30,6 +30,13 @@
     <feature name="Device">
         <param name="ios-package" value="CDVDevice" />
     </feature>
+    <feature name="File">
+        <param name="ios-package" value="CDVFile" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="Media">
+        <param name="ios-package" value="CDVSound" />
+    </feature>
     <name>Table99</name>
     <description>Classic teenpatti game</description>
     <author email="ankitit14@gmail.com" href="http://ionicframework.com/">Ankit Sharma</author>
