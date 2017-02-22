@@ -15,7 +15,13 @@ angular.module('table99', [
     'ngCordova'
 ])
 .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$facebookProvider', '$mdDialogProvider',
-    function($stateProvider, $urlRouterProvider, $locationProvider, $facebookProvider, $mdDialogProvider) {
+    function($stateProvider, $urlRouterProvider, $locationProvider, $facebookProvider, $mdDialogProvider, $cordovaNetwork) {
+        
+        document.addEventListener("deviceready", function () {
+           if ($cordovaNetwork.isOffline()) {
+              alert('Oops, Internet is not working on your device.');
+           }
+        }, false);
          
         $mdDialogProvider.addPreset('updateDisplayName', {
             options: function() {
@@ -1092,7 +1098,6 @@ angular.module('table99.controllers').controller('tablesCtrl', ['$rootScope', '$
             }
         };
         $scope.playSystemTable = function(table){
-            soundService.buttonClick();
             tableService.getAvailableSystemTables({
                 potAmount: table.boot_amount,
                 maxPlayers: table.max_players,
@@ -1449,7 +1454,6 @@ angular.module('table99.controllers').controller('playCtrl', ['$rootScope', '$lo
             );
         };
         $scope.openShopDialogFromMenu = function(){
-            soundService.alert();
             $scope.isMenuOpen = false;
             $scope.openShopDialog();
         };
@@ -2052,8 +2056,8 @@ angular.module('table99.controllers').controller('userPlayCtrl', ['$rootScope', 
             element.style.height =  (scrollHeight - 10)+ "px";
         };
         $scope.exitGame = function(){
+            soundService.exitClick();
             if(confirm('Are you sure want to left the game')){
-                soundService.exitClick();
                 socket.emit('removePlayer',  $scope.currentPlayer);
                 $state.go('tables', {});
             }
@@ -2075,7 +2079,6 @@ angular.module('table99.controllers').controller('userPlayCtrl', ['$rootScope', 
             $scope.currentPlayer.playerInfo.chips -= $scope.table.lastBet;
         }
         $scope.placeSideShow = function() {
-
             socket.emit('placeSideShow', {
                 tableId: tableId,
                 player: $scope.currentPlayer,
@@ -2191,7 +2194,6 @@ angular.module('table99.controllers').controller('userPlayCtrl', ['$rootScope', 
             });
         };
         $scope.openShopDialogFromMenu = function(){
-            soundService.alert();
             $scope.isMenuOpen = false;
             $scope.openShopDialog();
         };

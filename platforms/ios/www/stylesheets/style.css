@@ -1795,6 +1795,10 @@ md-dialog h2{
         height: 120px;
         overflow-y: auto;
     }
+    .character-container .character.add > span{
+        left: 33px;
+        top: 15px;
+    }
     .shop-container{
         display: block;
         height: 155px;
