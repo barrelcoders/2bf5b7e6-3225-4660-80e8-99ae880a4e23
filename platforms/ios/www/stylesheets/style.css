@@ -474,8 +474,8 @@ audio{
   display: none;
 }
 .table.play .side-player-outer {
-  width: 120px;
-  height: 145px;
+  width: 145px;
+  height: 175px;
   margin: auto;
   padding: 10px;
   border: 3px Solid rgb(38, 102, 157);
@@ -535,14 +535,14 @@ audio{
   left: 89px;
 }
 .table.play .side-player .player-info .pic {
-  position: absolute;
-  width: 70px;
-  height: 70px;
-  border: 3px Solid #26669D;
-  top: 18px;
-  left: 12px;
-  background-position: -668px -140px;
-  border-radius: 5px;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border: 3px Solid #26669D;
+    top: 18px;
+    left: 12px;
+    background-position: -668px -140px;
+    border-radius: 11px;
 }
 .table.play .side-player .player-info .pic.custom {
   background-size: 100% 100% !important;
@@ -551,7 +551,7 @@ audio{
   background-size: inherit !important;
 }
 .table.play .side-player .player-info .last-action {
-  top: 107px;
+  top: 140px;
   height: 20px;
   left: 0;
   position: absolute;
@@ -563,7 +563,7 @@ audio{
   position: absolute;
   top: -5px;
   height: 23px;
-  width: 115px;
+  width: 145px;
   overflow: hidden;
   color: #FFF;
   text-transform: uppercase;
@@ -571,8 +571,8 @@ audio{
 }
 .table.play .side-player .player-info .last-bet {
   position: absolute;
-  top: 90px;
-  width: 115px;
+  top: 120px;
+  width: 145px;
   color: #FFF;
   left: -10px;
 }
@@ -878,6 +878,126 @@ audio{
   height: 350px;
   overflow-y: auto;
 }
+.character-1{
+    background: url(../images/characters.jpg) -22px -21px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-2{
+    background: url(../images/characters.jpg) -172px -21px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-3{
+    background: url(../images/characters.jpg) -318px -21px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-4{
+    background: url(../images/characters.jpg) -469px -21px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-5{
+    background: url(../images/characters.jpg) -617px -21px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-6{
+    background: url(../images/characters.jpg) -26px -174px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-7{
+    background: url(../images/characters.jpg) -188px -170px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-8{
+    background: url(../images/characters.jpg) -326px -188px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-9{
+    background: url(../images/characters.jpg) -484px -188px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-10{
+    background: url(../images/characters.jpg) -626px -174px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-11{
+    background: url(../images/characters.jpg) -33px -330px  no-repeat !important;
+    background-size: inherit !important;
+}
+.character-12{
+    background: url(../images/characters.jpg) -166px -330px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-13{
+    background: url(../images/characters.jpg) -328px -330px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-14{
+    background: url(../images/characters.jpg) -472px -330px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-15{
+    background: url(../images/characters.jpg) -625px -330px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-16{
+    background: url(../images/characters.jpg) -22px -500px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-17{
+    background: url(../images/characters.jpg) -170px -500px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-18{
+    background: url(../images/characters.jpg) -320px -500px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-19{
+    background: url(../images/characters.jpg) -470px -500px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-20{
+    background: url(../images/characters.jpg) -622px -500px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-21{
+    background: url(../images/characters.jpg) -21px -670px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-22{
+    background: url(../images/characters.jpg) -168px -670px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-23{
+    background: url(../images/characters.jpg) -318px -670px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-24{
+    background: url(../images/characters.jpg) -465px -670px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-25{
+    background: url(../images/characters.jpg) -612px -670px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-26{
+    background: url(../images/characters.jpg) -26px -837px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-27{
+    background: url(../images/characters.jpg) -175px -837px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-28{
+    background: url(../images/characters.jpg) -327px -837px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-29{
+    background: url(../images/characters.jpg) -475px -837px no-repeat !important;
+    background-size: inherit !important;
+}
+.character-30{
+    background: url(../images/characters.jpg) -625px -837px no-repeat !important;
+    background-size: inherit !important;
+}
 
 .gifts-container {
   width: 500px;
@@ -922,7 +1042,20 @@ audio{
 .rules-container > img {
     width: 450px;
 }
-
+.bonus-container {
+    background: rgba(0,0,0,0.5);
+    font-size: 50px;
+    border-radius: 10px;
+    padding: 10px;
+    color: #FFF;
+    border: 2px solid #666;
+    cursor: pointer;
+    width: 250px;
+    text-align: center;
+}
+.bonus-container.large{
+    width: 400px;
+}
 .user-avatar{
   position: absolute;
   right: 70px;
@@ -1519,7 +1652,6 @@ audio{
   height: 40px;
   color: #6C7761;
   font-size: 15px;
-  text-transform: uppercase;
   font-weight: bold;
   display: block;
   width: 100%;
@@ -1627,7 +1759,7 @@ md-dialog h2{
     }
     .home-layout .table-label{
         left: 0;
-        height: 200px;
+        height: 220px;
         bottom: -50px;
     }
     .home-layout .table-bottom{
@@ -1659,20 +1791,25 @@ md-dialog h2{
         height: 45px;
     }
     .top-button-bar .score{
-        font-size: 15px !important;
         height: 28px !important;
         line-height: 25px;
         padding: 0 10px;
-        max-width: 100px;
+        max-width: 110px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         font-size: 10px !important;
-        width: 100px;
+        width: 70px;
         text-align: center;
+        margin: 8px 5px;
     }
     .top-button-bar .score.name{
-        width: 60px;
+        width: 110px;
+    }
+    .top-button-bar .user.image{
+        width: 50px;
+        margin: 10px;
+        height: 50px;
     }
     .btn-helper, .btn-main, .btn-sub {
         height: 30px;
@@ -1684,7 +1821,7 @@ md-dialog h2{
     }
     .window.large{
         width: 400px;
-        height: 200px;
+        height: 170px;
         padding: 10px;
         margin: 50px auto;
     }
@@ -1728,8 +1865,9 @@ md-dialog h2{
         font-size: 13px;
     }
     .table-holder{
-        margin-top: -50px;
+        margin-top: -20px;
         width: 550px;
+        height: 190px;
         margin-left: -90px;
     }
     .table-holder .game-table{
@@ -1795,10 +1933,107 @@ md-dialog h2{
         height: 120px;
         overflow-y: auto;
     }
-    .character-container .character.add > span{
-        left: 33px;
-        top: 15px;
+    .character-container .character{
+        height: 50px !important;
+        width: 50px !important;
+        border-radius: 5px;
     }
+    .character-container .character.add > span{
+        left: 10px;
+        top: -5px;
+        font-size: 50px;
+    }
+    .character-1{
+        background: url(../images/characters.jpg) -17px -12px no-repeat !important;
+    }
+    .character-2{
+        background: url(../images/characters.jpg) -87px -12px no-repeat !important;
+    }
+    .character-3{
+        background: url(../images/characters.jpg) -158px -12px no-repeat !important;
+    }
+    .character-4{
+        background: url(../images/characters.jpg) -230px -12px no-repeat !important;
+    }
+    .character-5{
+        background: url(../images/characters.jpg) -307px -12px no-repeat !important;
+    }
+    .character-6{
+        background: url(../images/characters.jpg) -17px -74px no-repeat !important;
+    }
+    .character-7{
+        background: url(../images/characters.jpg) -86px -74px no-repeat !important;
+    }
+    .character-8{
+        background: url(../images/characters.jpg) -156px -74px no-repeat !important;
+    }
+    .character-9{
+        background: url(../images/characters.jpg) -230px -74px no-repeat !important;
+    }
+    .character-10{
+        background: url(../images/characters.jpg) -307px -74px no-repeat !important;
+    }
+    .character-11{
+        background: url(../images/characters.jpg) -20px -134px  no-repeat !important;
+    }
+    .character-12{
+        background: url(../images/characters.jpg) -85px -134px no-repeat !important;
+    }
+    .character-13{
+        background: url(../images/characters.jpg) -158px -134px no-repeat !important;
+    }
+    .character-14{
+        background: url(../images/characters.jpg) -230px -134px no-repeat !important;
+    }
+    .character-15{
+        background: url(../images/characters.jpg) -307px -134px no-repeat !important;
+    }
+    .character-16{
+        background: url(../images/characters.jpg) -17px -200px no-repeat !important;
+    }
+    .character-17{
+        background: url(../images/characters.jpg) -83px -200px no-repeat !important;
+    }
+    .character-18{
+        background: url(../images/characters.jpg) -155px -200px no-repeat !important;
+    }
+    .character-19{
+        background: url(../images/characters.jpg) -230px -200px no-repeat !important;
+    }
+    .character-20{
+        background: url(../images/characters.jpg) -306px -200px no-repeat !important;
+    }
+    .character-21{
+        background: url(../images/characters.jpg) -16px -263px no-repeat !important;
+    }
+    .character-22{
+        background: url(../images/characters.jpg) -86px -263px no-repeat !important;
+    }
+    .character-23{
+        background: url(../images/characters.jpg) -156px -263px no-repeat !important;
+    }
+    .character-24{
+        background: url(../images/characters.jpg) -230px -263px no-repeat !important;
+    }
+    .character-25{
+        background: url(../images/characters.jpg) -305px -263px no-repeat !important;
+    }
+    .character-26{
+        background: url(../images/characters.jpg) -15px -327px no-repeat !important;
+    }
+    .character-27{
+        background: url(../images/characters.jpg) -85px -327px no-repeat !important;
+    }
+    .character-28{
+        background: url(../images/characters.jpg) -155px -327px no-repeat !important;
+    }
+    .character-29{
+        background: url(../images/characters.jpg) -230px -327px no-repeat !important;
+    }
+    .character-30{
+        background: url(../images/characters.jpg) -305px -327px no-repeat !important;
+    }
+
     .shop-container{
         display: block;
         height: 155px;
@@ -1833,6 +2068,26 @@ md-dialog h2{
     }
     .rules-container img{
         width: 350px;
+    }
+    .bonus-container{
+        font-size: 20px;
+        border-radius: 5px;
+        width: 200px;
+        position: fixed;
+        bottom: 5px;
+        left: 5px;
+        height: 40px;
+        z-index: 80;
+    }
+    .bonus-container.large{
+        width: 200px;
+    }
+    .bonus-container span{
+        line-height: 35px;
+        display: block;
+        height: 35px;
+        margin-top: -10px;
+        min-width: 100px;
     }
     md-dialog .btn-main{
         display: block;
@@ -1926,9 +2181,9 @@ md-dialog h2{
         margin-left: 50px;
     }
     .table.play .current-player-outer{
-        margin-top: -140px;
-        height: 118px;
-        width: 100px;
+        margin-top: -130px;
+        height: 100px;
+        width: 77px;
     }
     .table.play .current-player-outer .current-player{
         padding: 0;
@@ -1943,8 +2198,9 @@ md-dialog h2{
     }
     .table.play .current-player-outer .current-player .text-info{
         font-size: 10px;
-        width: 130px;
+        width: 70px;
         margin-top: -5px;
+        margin-left: -10px;
     }
     .table.play .current-player-outer .current-player .info .name{
         margin-top: 15px;
@@ -1953,8 +2209,11 @@ md-dialog h2{
         margin: 0;
     }
     .table.play .current-player-outer .current-player .pic{
-        width: 75px;
-        height: 75px;
+        width: 50px;
+        height: 50px;
+    }
+    .table.play .current-player-outer .icon-deal{
+        top: -15px;
     }
     .table.play .cards .cards-set .see-cards{
         bottom: 70px;
@@ -1981,7 +2240,7 @@ md-dialog h2{
         padding: 10px;
     }
     .table.play .side-player-outer{
-        width: 70px;
+        width: 73px;
         height: 90px;
         padding: 5px;
     }
@@ -2024,9 +2283,10 @@ md-dialog h2{
         border: 1px solid #FFF;
     }
     .table.play .actions{
-        margin-top: 0;
         width: 450px;
         float: right;
+        height: 36px;
+        margin-top: 6px;
     }
     .table.play .actions .bet-value{
         height: 25px;

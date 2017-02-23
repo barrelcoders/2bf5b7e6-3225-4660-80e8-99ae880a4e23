@@ -1,7 +1,13 @@
+<style type="text/css">
+    .custom-character{
+        background: url({{user.avatar}}) no-repeat;
+        background-size: contain !important;
+    }
+</style>
 <div ng-controller='userPlayCtrl'>
     <header class="top-button-bar no-background">
         <a href="javascript:void(0)" ng-click="toggleMenu()" class="btn-main btn-menu"><i class="fa fa-arrow-circle-left"></i></a>
-        <div class="user image" style="{{user.avatar}}" ng-class="isCustomCharacter ? 'custom':'predefined'" ng-click="openUpdateAvatarDialog()"></div>
+        <div class="user image" ng-class="characterClass" ng-click="openUpdateAvatarDialog()"></div>
         <div class="image" ng-style="background" ng-click="openChangeBackgroundDialog()"></div>
         <a href="javascript:void(0)" ng-click="toggleChatWindow()" scroll-bottom="chat-list" class="btn-chat"  >CHATTING</a>
         <a href="javascript:void(0)" ng-click="openFBFriendsDialog()" class="btn-sub btn-invite-friends"><i class="fa fa-users"></i></a>
@@ -138,7 +144,7 @@
                     <div ng-show="!player" class="invite" ng-click="invitePlayer()"> <span class="icon icon-md users"></span><span class="text">Invite Friend</span></div>
                     <div ng-show="player" class="player-info">
                         <div class="last-action">{{player.lastAction}}</div>
-                        <div class="pic" style="{{player.playerInfo.avatar}}" ng-class="{'custom': !(player.playerInfo.avatar.indexOf('characters.jpg') > -1), 'predefined': (player.playerInfo.avatar.indexOf('characters.jpg') > -1)}"></div>
+                        <div class="pic" ng-class="playerAvatarClass(player)"></div>
                         <div slot="{{player.slot}}" class="name">{{ player.playerInfo.displayName}}</div>
                         <div class="last-bet"><i class="fa fa-rupee"></i> {{ player.lastBet || player.playerInfo.chips | number}}</div>
                     </div>
@@ -159,9 +165,7 @@
                             <span slot="{{player.slot}}" class="name">{{player.playerInfo.displayName}}</span>
                         </div>
                         <div class="pic" style="{{player.playerInfo.avatar}}" ng-class="{'custom': !(player.playerInfo.avatar.indexOf('characters.jpg') > -1), 'predefined': (player.playerInfo.avatar.indexOf('characters.jpg') > -1)}"></div>
-                        <div class="text-info">
-                            <span class="chips"><i class="fa fa-rupee"></i> {{player.playerInfo.chips | number}}</span>
-                            <div class="last-action">{{player.lastAction}}</div>
+                        <div class="pic" ng-class="playerAvatarClass(player)"></div>
                         </div>
                     </div>
                     <div class="cards">
