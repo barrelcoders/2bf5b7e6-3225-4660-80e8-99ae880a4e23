@@ -1,16 +1,18 @@
 <style type="text/css">
     .custom-character{
-        background: url({{user.avatar}}) no-repeat;
+        {{user.avatar}}
         background-size: contain !important;
+        background-repeat: no-repeat;
     }
 </style>
 <div ng-controller='userPlayCtrl'>
     <header class="top-button-bar no-background">
         <a href="javascript:void(0)" ng-click="toggleMenu()" class="btn-main btn-menu"><i class="fa fa-arrow-circle-left"></i></a>
         <div class="user image" ng-class="characterClass" ng-click="openUpdateAvatarDialog()"></div>
-        <div class="image" ng-style="background" ng-click="openChangeBackgroundDialog()"></div>
+        <div class="background image" ng-style="background" ng-click="openChangeBackgroundDialog()"></div>
         <a href="javascript:void(0)" ng-click="toggleChatWindow()" scroll-bottom="chat-list" class="btn-chat"  >CHATTING</a>
-        <a href="javascript:void(0)" ng-click="openFBFriendsDialog()" class="btn-sub btn-invite-friends"><i class="fa fa-users"></i></a>
+        <a href="javascript:void(0)" ng-click="facebookShare()" class="btn-main btn-bottom-facebook"><i class="fa fa-facebook"></i></a>
+        <a href="javascript:void(0)" ng-click="whatsAppShare()" class="btn-helper btn-bottom-whatsapp"><i class="fa fa-whatsapp"></i></a>
         <div class="right">
             <div class="score" ng-click="openChangeNameDialog()">{{user.displayName}}</div>
             <a href="javascript:void(0)" ng-click="openShopDialog()" class="btn-main" >Shop</a>
@@ -164,7 +166,6 @@
                         <div class="text-info">
                             <span slot="{{player.slot}}" class="name">{{player.playerInfo.displayName}}</span>
                         </div>
-                        <div class="pic" style="{{player.playerInfo.avatar}}" ng-class="{'custom': !(player.playerInfo.avatar.indexOf('characters.jpg') > -1), 'predefined': (player.playerInfo.avatar.indexOf('characters.jpg') > -1)}"></div>
                         <div class="pic" ng-class="playerAvatarClass(player)"></div>
                         </div>
                     </div>

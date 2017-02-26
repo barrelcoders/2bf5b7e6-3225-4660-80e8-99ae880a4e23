@@ -1,14 +1,15 @@
 <style type="text/css">
     .custom-character{
-        background: url({{user.avatar}}) no-repeat;
+        {{user.avatar}}
         background-size: contain !important;
+        background-repeat: no-repeat;
     }
 </style>
 <div ng-controller='playCtrl'>
     <header class="top-button-bar no-background">
         <a href="javascript:void(0)" ng-click="toggleMenu()" class="btn-main btn-menu"><i class="fa fa-arrow-circle-left"></i></a>
         <div class="user image" ng-class="characterClass" ng-click="openUpdateAvatarDialog()"></div>
-        <div class="image" ng-style="background" ng-click="openChangeBackgroundDialog()"></div>
+        <div class="background image" ng-style="background" ng-click="openChangeBackgroundDialog()"></div>
         <a href="javascript:void(0)" ng-click="toggleChatWindow()" scroll-bottom="chat-list" class="btn-chat" >CHATTING</a>
         <div class="right">
             <div class="score" ng-click="openChangeNameDialog()">{{user.displayName}}</div>

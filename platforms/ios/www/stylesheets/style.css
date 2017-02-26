@@ -1445,6 +1445,9 @@ audio{
   margin-top: 0;
   height: 65px;
 }
+.top-button-bar .background.image{
+    background: url(../images/violent-bg.jpg);
+}
 .top-button-bar .score{
   background: #400201;
   height: 30px;
@@ -1525,12 +1528,19 @@ audio{
   margin-right: 10px;
   display: inline-block;
 }
-.btn-invite-friends{
+.btn-bottom-facebook, .btn-bottom-whatsapp{
   position: fixed;
   bottom: 20px;
   right: 10px;
   font-size: 50px;
   height: 65px;
+}
+.btn-bottom-whatsapp{
+    position: fixed;
+    bottom: 20px;
+    right: 40px;
+    font-size: 50px;
+    height: 65px;
 }
 .btn-main:hover, .btn-helper:hover, .btn-sub:hover, .btn-chat:hover,
 .btn-main:active, .btn-helper:active, .btn-sub:active, .btn-chat:active,
@@ -1816,6 +1826,17 @@ md-dialog h2{
         line-height: 15px;
         font-size: 12px;
     }
+    .btn-bottom-facebook, .btn-bottom-whatsapp{
+        position: fixed;
+        bottom: 20px;
+        right: 10px;
+        font-size: 20px !important;
+        height: 35px !important;
+        border-radius: 20px;
+    }
+    .btn-bottom-whatsapp{
+        right: 55px;
+    }
     .window{
         margin: 30px auto;
     }
@@ -1837,9 +1858,15 @@ md-dialog h2{
         margin: 25px auto;
         height: 310px;
     }
+    .window.createTable{
+        height: 310px;
+    }
     .window.signin > div, .window.signup > div, .window.createTable > div{
         top: 50px;
         height: 150px;
+    }
+    .window.createTable > div{
+        height: 220px;
     }
     .window.signup > div {
         height: 220px;

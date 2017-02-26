@@ -7,7 +7,6 @@ angular.module('table99', [
     'table99.directives',
     'ui.router',
     'ui.bootstrap',
-    'ngFacebook',
     'slickCarousel',
     'ngFileUpload',
     'ngMaterial',
@@ -15,8 +14,8 @@ angular.module('table99', [
     'ngCordova',
     'angularMoment'
 ])
-.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$facebookProvider', '$mdDialogProvider',
-    function($stateProvider, $urlRouterProvider, $locationProvider, $facebookProvider, $mdDialogProvider) {
+.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$mdDialogProvider',
+    function($stateProvider, $urlRouterProvider, $locationProvider, $mdDialogProvider) {
          
         $mdDialogProvider.addPreset('updateDisplayName', {
             options: function() {
@@ -111,28 +110,30 @@ angular.module('table99', [
                 templateUrl: "templates/userPlay.html",
                 controller: "userPlayCtrl"
             });
-
-        //217009365372523
-
-        $facebookProvider.setAppId('819967424810603');
     }
 ])
-.run(function($rootScope, $localStorage, $cordovaNetwork) {
-        if($localStorage){
-            $localStorage.LOADING = false;
+.run(function($rootScope, $localStorage, $cordovaNetwork, $state, $window) {
+    
+     $window.addEventListener('LaunchUrl', function(event) {
+        debugger;
+        if(event.detail.url.indexOf('table99') > -1){
+            var gameId = event.detail.url.split('/')[3];
+            $state.go('userPlay', {'id': gameId, 'ref': true});
         }
+    });
+    if($localStorage){
+        $localStorage.LOADING = false;
+    }
      
-        ionic.Platform.ready(function() {
-            ionic.Platform.fullScreen();
-            if (window.StatusBar) {
-                return StatusBar.hide();
-            }
-        });
+    ionic.Platform.ready(function() {
+        ionic.Platform.fullScreen();
+        if (window.StatusBar) {
+            return StatusBar.hide();
+        }
+    });
      
-     if(ionic.Platform.isWebView()){
-     
+    if(ionic.Platform.isWebView()){
         $rootScope.$on('$cordovaNetwork:online', function(event, networkState){});
-     
         $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
             alert('Oops, internet is not availble in your device, Try to re-connect after some time.');
         });
@@ -140,34 +141,13 @@ angular.module('table99', [
      }
      else {
         window.addEventListener("online", function(e) {}, false);
+        window.addEventListener("offline", function(e) {debugger;
+                        alert('Oops, internet is not availble in your system, Try to re-connect after some time.');
+                      }, false);
      
-        window.addEventListener("offline", function(e) {
-             alert('Oops, internet is not availble in your system, Try to re-connect after some time.');
-        }, false);
      }
-
-        (function(d){
-        // load the Facebook javascript SDK
-
-        var js,
-            id = 'facebook-jssdk',
-            ref = d.getElementsByTagName('script')[0];
-
-        if (d.getElementById(id)) {
-            return;
-        }
-
-        js = d.createElement('script');
-        js.id = id;
-        js.async = true;
-        js.src = "http://connect.facebook.net/en_US/all.js";
-
-        ref.parentNode.insertBefore(js, ref);
-
-    }(document));
-
 })
-angular.module('table99.config', []).constant('BASE_URL','http://192.168.2.139:3000/');
+angular.module('table99.config', []).constant('BASE_URL','http://192.168.0.106:3000/');
 angular.module('table99.controllers', []);
 angular.module('table99.directives', []);
 angular.module('table99.services', []);
@@ -945,10 +925,9 @@ angular.module('table99.controllers').controller('signInCtrl', ['$rootScope', '$
                 alert('Problem fetching facebook details, Please try again later');
             }
 
-            FB.getLoginStatus(function(response) {
+            window.facebookConnectPlugin.getLoginStatus(function(response) {
                 if (response.status === 'connected'){
-                    FB.api("me/?fields=email,first_name,last_name,picture.width(200).height(200)",["email","public_profile"],
-                        onError,
+                    window.facebookConnectPlugin.api("me/?fields=email,first_name,last_name,picture.width(100).height(100)",["email","public_profile"],
                         function (response) {
                             if(response && response.first_name && response.last_name && response.email && response.picture){
                                 var name = response.first_name +" "+ response.last_name,
@@ -960,13 +939,14 @@ angular.module('table99.controllers').controller('signInCtrl', ['$rootScope', '$
                             else{
                                 onError();
                             }
-                        });
+                        },
+                        onError);
                 }
                 else{
-                    FB.login(function (response) {
+                    window.facebookConnectPlugin.login(['email','public_profile'],
+                    function (response) {
                         if (response.status === 'connected'){
-                            FB.api("me/?fields=email,first_name,last_name,picture.width(200).height(200)",["email","public_profile"],
-                                onError,
+                            window.facebookConnectPlugin.api("me/?fields=email,first_name,last_name,picture.width(200).height(200)",["email","public_profile"],
                                 function (response) {
                                     if(response && response.first_name && response.last_name && response.email && response.picture){
                                         var name = response.first_name +" "+ response.last_name,
@@ -978,9 +958,9 @@ angular.module('table99.controllers').controller('signInCtrl', ['$rootScope', '$
                                     else{
                                         onError();
                                     }
-                                });
+                                },onError);
                         }
-                    },{scope:'email,public_profile'});
+                    });
                 }
             });
         }
@@ -1174,6 +1154,7 @@ angular.module('table99.controllers').controller('tablesCtrl', ['$rootScope', '$
                         chips: $scope.user.chips + $scope.bonusObj.amount
                     }).success(function(res) {
                         if (res.status == 'success') {
+                            alert('Bonus successfully credited in your account');
                             if($localStorage.USER){
                                 var localStorageData = $localStorage.USER;
                                 localStorageData.chips = res.data.chips;
@@ -2106,10 +2087,9 @@ angular.module('table99.controllers').controller('userPlayCtrl', ['$rootScope', 
             }
             else if($localStorage.USER == undefined  && referer == 'true'){
                 $timeout(function(){
-                    FB.getLoginStatus(function(response) {
+                    window.facebookConnectPlugin.getLoginStatus(function(response) {
                         if (response.status === 'connected'){
-                            FB.api("me/?fields=email,first_name,last_name,picture.width(200).height(200)",["email","public_profile"],
-                                onError,
+                            window.facebookConnectPlugin.api("me/?fields=email,first_name,last_name,picture.width(200).height(200)",["email","public_profile"],
                                 function (response) {
                                     if(response && response.first_name && response.last_name && response.email && response.picture){
                                         var name = response.first_name +" "+ response.last_name,
@@ -2121,13 +2101,14 @@ angular.module('table99.controllers').controller('userPlayCtrl', ['$rootScope', 
                                     else{
                                         onError();
                                     }
-                                });
+                                },
+                                onError);
                         }
                         else{
-                            FB.login(function (response) {
+                            window.facebookConnectPlugin.login(['email','public_profile'],
+                            function (response) {
                                 if (response.status === 'connected'){
-                                    FB.api("me/?fields=email,first_name,last_name,picture.width(200).height(200)",["email","public_profile"],
-                                        onError,
+                                    window.facebookConnectPlugin.api("me/?fields=email,first_name,last_name,picture.width(200).height(200)",["email","public_profile"],
                                         function (response) {
                                             if(response && response.first_name && response.last_name && response.email && response.picture){
                                                 var name = response.first_name +" "+ response.last_name,
@@ -2139,9 +2120,10 @@ angular.module('table99.controllers').controller('userPlayCtrl', ['$rootScope', 
                                             else{
                                                 onError();
                                             }
-                                        });
+                                        },
+                                        onError);
                                 }
-                            },{scope:'email,public_profile'});
+                            });
                         }
                     });
                 }, 2000);
@@ -2325,12 +2307,40 @@ angular.module('table99.controllers').controller('userPlayCtrl', ['$rootScope', 
                 })
             );
         };
-        $scope.openFBFriendsDialog = function($event){
+        $scope.facebookShare = function($event){
             soundService.alert();
-            FB.ui({
+            window.facebookConnectPlugin.showDialog({
                 method: 'send',
-                link:  BASE_URL+"#/userPlay/"+$scope.table.id+"/true",
+                link: BASE_URL+"#/userPlay/"+$scope.table.id+"/true",
+                picture: "https://www.w3schools.com/css/trolltunga.jpg",
+            },
+            function(response) {
+                if (response && response.completionGesture == "message") {
+                    alert('Request has been successfully send');
+                } else {
+                    alert('Problem sending request. Please try again later');
+                }
             });
+        };
+        $scope.whatsAppShare = function($event){
+            soundService.alert();
+            navigator.screenshot.save(function(error,res){
+                if(error){
+                    console.error(error);
+                }else{
+                    
+                    /*window.plugins.socialsharing.shareViaWhatsApp(null, 'file://' + res.filePath, null, function(response){
+                                
+                            }, function(error){
+                                console.log(error);
+                    });*/
+                    window.plugins.socialsharing.shareViaWhatsApp("Play "+$scope.table.name+" with me\n"+BASE_URL+"#/userPlay/"+$scope.table.id+"/true", null, null, function(response){
+                            alert('Request has been successfully send');
+                        }, function(error){
+                            alert('Problem sending request. Please try again later');
+                    });
+                }
+            }, 'jpg', 50, 'myScreenshot');
         };
         $scope.openShopDialogFromMenu = function(){
             $scope.isMenuOpen = false;

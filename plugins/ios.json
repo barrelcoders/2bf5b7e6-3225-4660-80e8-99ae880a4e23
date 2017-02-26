@@ -25,6 +25,24 @@
         "cordova-plugin-media": {
             "MICROPHONE_USAGE_DESCRIPTION": " ",
             "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+        },
+        "cordova-plugin-facebook4": {
+            "APP_ID": "217009365372523",
+            "APP_NAME": "“Table99”",
+            "PACKAGE_NAME": "com.ionicframework.table99779826"
+        },
+        "cordova-plugin-customurlscheme": {
+            "URL_SCHEME": "table99",
+            "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "com.ionicframework.table99779826"
+        },
+        "com.darktalker.cordova.screenshot": {
+            "PACKAGE_NAME": "com.ionicframework.table99779826"
         }
     },
     "dependent_plugins": {
