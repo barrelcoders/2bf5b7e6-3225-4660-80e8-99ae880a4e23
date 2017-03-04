@@ -147,7 +147,7 @@ angular.module('table99', [
      
      }
 })
-angular.module('table99.config', []).constant('BASE_URL','http://192.168.0.106:3000/');
+angular.module('table99.config', []).constant('BASE_URL','http://ec2-54-255-190-240.ap-southeast-1.compute.amazonaws.com:3000/');
 angular.module('table99.controllers', []);
 angular.module('table99.directives', []);
 angular.module('table99.services', []);
@@ -205,8 +205,8 @@ angular.module('table99.directives').directive('playingCard', [
 
     }
 ]);
-angular.module('table99.directives').directive('sidePlayer', ['$filter', 'soundService', '$mdDialog', '$timeout',
-    function($filter, soundService, $mdDialog, $timeout) {
+angular.module('table99.directives').directive('sidePlayer', ['$filter', 'soundService', '$mdDialog', '$timeout', '$interval', '$localStorage',
+    function($filter, soundService, $mdDialog, $timeout, $interval, $localStorage) {
         return {
             scope: {
                 table: '=',
@@ -220,7 +220,7 @@ angular.module('table99.directives').directive('sidePlayer', ['$filter', 'soundS
                     var animateFrom = $(element).find(".side-player-outer").offset();
                     animateFrom.top += 20;
                     animateFrom.left += 10;
-                    animateTo.left += 10;
+                    animateTo.left += 25;
                     animateTo.top += 10;
                     if (reverse) {
                         var temp = animateFrom;
@@ -257,9 +257,40 @@ angular.module('table99.directives').directive('sidePlayer', ['$filter', 'soundS
                         });
                     });
                 }
+                function doCardDistributionAnimation(args) {
+                    if(!$localStorage.cardAnimationRunning)
+                        return;
+                                                              
+                    var counter = 2;
+                    var interval = $interval(function() {
+                        var animateDiv = $("<div class='deck-card spin counter-"+counter+"' style='width: 20px;height: 30px;border: 1px solid #FFF;'></div>").appendTo("body > .container");
+                        var animateTo = $(element).find(".side-player-outer").offset();
+                        var animateFrom = $(".table-bet").offset();
+                            animateFrom.top += 10;
+                            animateFrom.left += 10;
+                            animateTo.left += 80;
+                            animateTo.top += 60;
+                            animateDiv.css(animateFrom);
+                            animateDiv.fadeIn(function() {
+                                soundService.card();
+                                animateDiv.animate(animateTo, args.timeout || 500, function() {
+                                    $('.deck-card').removeClass('spin');
+                                    $('.deck-card.counter-2').addClass('rotate-right');
+                                    $('.deck-card.counter-0').addClass('rotate-left');
+                                });
+                            });
+                                             
+                            if(counter == 0){
+                                $localStorage.cardAnimationRunning = false;
+                                $interval.cancel(interval);
+                            }
+                            counter--;
+                    }, 1000);
+                }
 
                 var performBetAnimation = scope.$on('performBetAnimation', function(evt, args) {
                     if (scope.player && scope.player.turn) {
+                        soundService.coin();
                         doAnimation({
                             amount: args.bet,
                             timeout: args.timeout
@@ -278,8 +309,19 @@ angular.module('table99.directives').directive('sidePlayer', ['$filter', 'soundS
                 });
                 var performBootAnimation = scope.$on('performBootAnimation', function(evt, args) {
                     if (scope.player && scope.player.active) {
+                        soundService.coin();
                         doAnimation({
                             amount: args.boot,
+                            timeout: args.timeout
+                        });
+                        $timeout(function(){
+                            $('.deck-card').remove();
+                        }, args.timeout);
+                    }
+                });
+                var performCardDistributionAnimation = scope.$on('performCardDistributionAnimation', function(evt, args) {
+                    if (scope.player && scope.player.active) {
+                        doCardDistributionAnimation({
                             timeout: args.timeout
                         });
                     }
@@ -301,7 +343,7 @@ angular.module('table99.directives').directive('sidePlayer', ['$filter', 'soundS
                         scope.$apply();
                     }
                 });
-
+                                                              
                 scope.share = function(event){
                     if(scope.player && scope.player.active){
                         $mdDialog.show(
@@ -322,12 +364,9 @@ angular.module('table99.directives').directive('sidePlayer', ['$filter', 'soundS
                 };
                 scope.playerAvatarClass = function(player){
                     var className = '';
-                    if(player && player.active){
+                    if(player && player.playerInfo)
                         className = (player.playerInfo.avatar.indexOf('character') > -1) ? player.playerInfo.avatar : 'custom-character';
-                    }
-                    else{
-                        className = null;
-                    }
+                    
                     return className;
                 };
                                                               
@@ -336,14 +375,16 @@ angular.module('table99.directives').directive('sidePlayer', ['$filter', 'soundS
                     performWinnerAnimation();
                     performBootAnimation();
                     performGiftAnimation();
+                    performCardDistributionAnimation();
                     updatePlayerSuccess();
+                    updateCardCounter();
                 });
             }
         };
     }
 ]);
-angular.module('table99.directives').directive('mainPlayer', ['$filter', 'soundService', '$timeout',
-    function($filter, soundService, $timeout) {
+angular.module('table99.directives').directive('mainPlayer', ['$filter', 'soundService', '$timeout', '$interval', '$localStorage',
+    function($filter, soundService, $timeout, $interval, $localStorage) {
         var BLIND_ALLOWED = 4;
         return {
             scope: {
@@ -363,7 +404,7 @@ angular.module('table99.directives').directive('mainPlayer', ['$filter', 'soundS
                     var animateFrom = $(element).find(".current-player-outer").offset();
                     animateFrom.top += 20;
                     animateFrom.left += 100;
-                    animateTo.left += 10;
+                    animateTo.left += 25;
                     animateTo.top += 10;
                     if (reverse) {
                         var temp = animateFrom;
@@ -400,9 +441,39 @@ angular.module('table99.directives').directive('mainPlayer', ['$filter', 'soundS
                         });
                     });
                 }
+                function doCardDistributionAnimation(args) {
+                    if(!$localStorage.cardAnimationRunning)
+                        return;
+                                                 
+                    var counter = 2;
+                    var interval = $interval(function() {
+                        var animateDiv = $("<div class='deck-card spin counter-"+counter+"' style='width: 30px;height: 50px;border: 2px solid #FFF;'></div>").appendTo("body > .container");
+                        var animateTo = $(element).find(".current-player-outer").offset();
+                        var animateFrom = $(".table-bet").offset();
+                        animateFrom.top += 20;
+                        animateFrom.left += 10;
+                        animateTo.left += 70;
+                        animateTo.top += 50;
+                        animateDiv.css(animateFrom);
+                        animateDiv.fadeIn(function() {
+                            soundService.card();
+                            animateDiv.animate(animateTo, args.timeout || 500, function() {
+                                $('.deck-card.counter-2').addClass('rotate-right');
+                                $('.deck-card.counter-0').addClass('rotate-left');
+                            });
+                        });
+            
+                        if(counter == 0){
+                            $localStorage.cardAnimationRunning = false;
+                            $interval.cancel(interval);
+                        }
+                        counter--;
+                    }, 1000);
+                }
 
                 var performBetAnimation = scope.$on('performBetAnimation', function(evt, args) {
                     if (scope.player && scope.player.turn) {
+                        soundService.coin();
                         doAnimation({
                             amount: args.bet,
                             timeout: args.timeout
@@ -419,12 +490,23 @@ angular.module('table99.directives').directive('mainPlayer', ['$filter', 'soundS
                         }, true);
                     }
                 });
+                var performCardDistributionAnimation = scope.$on('performCardDistributionAnimation', function(evt, args) {
+                    if (scope.player && scope.player.active) {
+                        doCardDistributionAnimation({
+                            timeout: args.timeout
+                        });
+                    }
+                });
                 var performBootAnimation = scope.$on('performBootAnimation', function(evt, args) {
                     if (scope.player && scope.player.active) {
+                        soundService.coin();
                         doAnimation({
                             amount: args.boot,
                             timeout: args.timeout
                         });
+                        $timeout(function(){
+                            $('.deck-card').remove();
+                        }, args.timeout);
                     }
 
                 });
@@ -444,16 +526,13 @@ angular.module('table99.directives').directive('mainPlayer', ['$filter', 'soundS
                         scope.$apply();
                     }
                 });
-
+                
                 scope.disableActions = false;
                 scope.playerAvatarClass = function(player){
                     var className = '';
-                    if(player && player.active){
+                    if(player && player.playerInfo)
                         className = (player.playerInfo.avatar.indexOf('character') > -1) ? player.playerInfo.avatar : 'custom-character';
-                    }
-                    else{
-                        className = null;
-                    }
+                                                              
                     return className;
                 };
                 scope.pack = function() {
@@ -552,7 +631,9 @@ angular.module('table99.directives').directive('mainPlayer', ['$filter', 'soundS
                     performWinnerAnimation();
                     performBootAnimation();
                     performGiftAnimation();
+                    performCardDistributionAnimation();
                     updatePlayerSuccess();
+                    updateCardCounter();
                 });
 
 
@@ -653,8 +734,8 @@ angular.module('table99.directives').directive('tableBet', [
 
     }
 ]);
-angular.module('table99.directives').directive('tableInfo', [
-    function() {
+angular.module('table99.directives').directive('tableInfo', [ 'soundService',
+    function(soundService) {
         return {
             scope: {
                 table: '=',
@@ -663,6 +744,7 @@ angular.module('table99.directives').directive('tableInfo', [
             link: function(scope, element, attrs) {
                 scope.close = function(){
                     scope.$parent.tableInfoOpen = false;
+                    soundService.buttonClick();
                 }
             }
         }
@@ -706,7 +788,9 @@ angular.module('table99.services').factory('soundService', ['$cordovaMedia',
             winnerMedia = $cordovaMedia.newMedia('sounds/applaused.mp3'),
             loserMedia = $cordovaMedia.newMedia('sounds/curse.mp3'),
             swipeMedia = $cordovaMedia.newMedia('sounds/swipe.mp3'),
-            alertMedia = $cordovaMedia.newMedia('sounds/alert.mp3');
+            alertMedia = $cordovaMedia.newMedia('sounds/alert.mp3'),
+            cardMedia = $cordovaMedia.newMedia('sounds/card.mp3'),
+            coinMedia = $cordovaMedia.newMedia('sounds/coin.mp3');
                                                             
         var iOSPlayOptions = {
             numberOfLoops: 1,
@@ -732,6 +816,12 @@ angular.module('table99.services').factory('soundService', ['$cordovaMedia',
             alert: function(){
                 alertMedia.play(iOSPlayOptions);
             },
+            card: function(){
+                cardMedia.play(iOSPlayOptions);
+            },
+            coin: function(){
+                coinMedia.play(iOSPlayOptions);
+            }
         };
     }
 ]);
@@ -780,7 +870,10 @@ angular.module('table99.services').factory('userService', ['$http', 'BASE_URL',
             },
             creditBonus: function(params) {
                 return $http.post(BASE_URL + 'user/creditBonus', params);
-            }
+            },
+            updateBonusTime: function(params){
+                return $http.post(BASE_URL + 'user/updateBonusTime', params);
+            },
         };
     }
 ]);
@@ -996,8 +1089,8 @@ angular.module('table99.controllers').controller('signInCtrl', ['$rootScope', '$
         }
     }
 ]);
-angular.module('table99.controllers').controller('tablesCtrl', ['$rootScope', '$localStorage', '$scope', 'tableService', '$state', 'layoutService', 'soundService', '$mdDialog', 'userService', '$interval',
-    function($rootScope, $localStorage, $scope, tableService, $state, layoutService, soundService, $mdDialog, userService, $interval) {
+angular.module('table99.controllers').controller('tablesCtrl', ['$rootScope', '$localStorage', '$scope', 'tableService', '$state', 'layoutService', 'soundService', '$mdDialog', 'userService', '$interval', '$window',
+    function($rootScope, $localStorage, $scope, tableService, $state, layoutService, soundService, $mdDialog, userService, $interval, $window) {
         $rootScope.layout = layoutService.layoutClass.gameLayout;
         $scope.bonusObj = {};
         $scope.bonusCredited = false;
@@ -1006,7 +1099,7 @@ angular.module('table99.controllers').controller('tablesCtrl', ['$rootScope', '$
         $scope.tables = [];
         $scope.customTables = [];
         $scope.isLoading = false;
-        $scope.nextBonusDateString = null;
+        $scope.nextBonusDateString = '0h 0m 0s';
 
         if($localStorage){
             if(!$localStorage.USER){
@@ -1179,10 +1272,24 @@ angular.module('table99.controllers').controller('tablesCtrl', ['$rootScope', '$
                                 s = $.trim(s).length === 1 ? '0' + s : s;
                                                                                                                                                                  
                                 $scope.nextBonusDateString = parseInt(h)+"h "+parseInt(m)+"m "+parseInt(s)+"s";
-                                                                                                                                                                 
-                                if(duration.asSeconds() == 0){
+                                                     
+                                var remainingSeconds = duration.asSeconds();
+                                if(remainingSeconds == 0){
                                     $interval.cancel(interval);
                                     $scope.bonusCredited = false;
+                                }
+                                if(remainingSeconds < 0){
+                                    $interval.cancel(interval);
+                                    userService.updateBonusTime({
+                                        user: $scope.user.id
+                                    }).success(function(res) {
+                                        if (res.status == 'success') {
+                                            $state.reload();
+                                        }
+                                        if (res.status == 'failed') {
+                                            if(res.message == "PROBLEM_UPDATING_BONUS_TIME"){}
+                                        }
+                                    });
                                 }
                             }, 1000);
                             $scope.bonusCredited = true;
@@ -1282,10 +1389,25 @@ angular.module('table99.controllers').controller('tablesCtrl', ['$rootScope', '$
                                             
                             $scope.nextBonusDateString = parseInt(h)+"h "+parseInt(m)+"m "+parseInt(s)+"s";
                                                 
-                            if(duration.asSeconds() == 0){
+                            var remainingSeconds = duration.asSeconds();
+                            if(remainingSeconds == 0){
                                 $interval.cancel(interval);
                                 $scope.bonusCredited = false;
                             }
+                            if(remainingSeconds < 0){
+                                $interval.cancel(interval);
+                                userService.updateBonusTime({
+                                    user: $scope.user.id
+                                }).success(function(res) {
+                                    if (res.status == 'success') {
+                                        $state.reload();
+                                    }
+                                    if (res.status == 'failed') {
+                                        if(res.message == "PROBLEM_UPDATING_BONUS_TIME"){}
+                                    }
+                                });
+                            }
+                            
                         }, 1000);
                     $scope.bonusCredited = true;
                 }
@@ -1392,7 +1514,6 @@ angular.module('table99.controllers').controller('playCtrl', ['$rootScope', '$lo
                 catch(err) {
                     $state.go('tables', {});
                 }
-                
             }
         }
         else{
@@ -1444,6 +1565,7 @@ angular.module('table99.controllers').controller('playCtrl', ['$rootScope', '$lo
         };
         $scope.exitGame = function(){
             if(confirm('Are you sure want to left the game')){
+                $('.deck-card').remove();
                 soundService.exitClick();
                 socket.emit('removePlayer',  $scope.currentPlayer);
                 $state.go('tables', {});
@@ -1914,6 +2036,18 @@ angular.module('table99.controllers').controller('playCtrl', ['$rootScope', '$lo
                     $scope.$digest();
                 }, 1000);
             });
+            socket.on('distributeCards', function(args){
+                if(scope.tableId != args.tableId)
+                    return;
+                
+                if($localStorage.cardAnimationRunning)
+                    return;
+                    
+                $localStorage.cardAnimationRunning = true;
+                $scope.$broadcast('performCardDistributionAnimation', {
+                    timeout: 1000
+                });
+            });
             socket.on('cardsSeen', function(args) {
                 if(args.tableId != tableId)
                     return;
@@ -2179,6 +2313,7 @@ angular.module('table99.controllers').controller('userPlayCtrl', ['$rootScope', 
         $scope.exitGame = function(){
             soundService.exitClick();
             if(confirm('Are you sure want to left the game')){
+                $('.deck-card').remove();
                 socket.emit('removePlayer',  $scope.currentPlayer);
                 $state.go('tables', {});
             }
@@ -2685,6 +2820,18 @@ angular.module('table99.controllers').controller('userPlayCtrl', ['$rootScope', 
                     }
                     $scope.$digest();
                 }, 1000);
+            });
+            socket.on('distributeCards', function(args){
+                if(scope.tableId != args.tableId)
+                    return;
+                
+                if($localStorage.cardAnimationRunning)
+                    return;
+                
+                $localStorage.cardAnimationRunning = true;
+                $scope.$broadcast('performCardDistributionAnimation', {
+                    timeout: 500
+                });
             });
             socket.on('cardsSeen', function(args) {
                 if(args.tableId != tableId)

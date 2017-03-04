@@ -1,25 +1,32 @@
 <style type="text/css">
     .custom-character{
-        {{user.avatar}}
+        {{(user.avatar.indexOf('character') == -1) ? user.avatar : ''}}
         background-size: contain !important;
         background-repeat: no-repeat;
     }
 </style>
 <div ng-controller='playCtrl'>
     <header class="top-button-bar no-background">
-        <a href="javascript:void(0)" ng-click="toggleMenu()" class="btn-main btn-menu"><i class="fa fa-arrow-circle-left"></i></a>
+        <a href="javascript:void(0)" ng-click="toggleMenu()" class="btn-icon btn-menu">
+            <i class="fa fa-arrow-circle-left"></i>
+        </a>
         <div class="user image" ng-class="characterClass" ng-click="openUpdateAvatarDialog()"></div>
         <div class="background image" ng-style="background" ng-click="openChangeBackgroundDialog()"></div>
         <a href="javascript:void(0)" ng-click="toggleChatWindow()" scroll-bottom="chat-list" class="btn-chat" >CHATTING</a>
         <div class="right">
-            <div class="score" ng-click="openChangeNameDialog()">{{user.displayName}}</div>
-            <a href="javascript:void(0)" ng-click="openShopDialog()" class="btn-main" >Shop</a>
-            <a href="javascript:void(0)" ng-show="table.gameStarted" ng-click="toggleTableInfo()" class="btn-main" ><i class="fa fa-info-circle"></i></a>
-            <a href="javascript:void(0)" ng-click="exitGame()" class="btn-sub" >Exit <i class="fa fa-sign-out"></i></a>
+            <a href="javascript:void(0)" ng-click="openShopDialog()" class="btn-icon" >
+                <i class="fa fa-cart-plus"></i>
+            </a>
+            <a href="javascript:void(0)" ng-show="table.gameStarted" ng-click="toggleTableInfo()" class="btn-icon" >
+                <i class="fa fa-info-circle"></i>
+            </a>
+            <a href="javascript:void(0)" ng-click="exitGame()" class="btn-icon" >
+                <i class="fa fa-sign-out"></i>
+            </a>
         </div>
     </header>
     <div>
-        <div class="menu-window" ng-show="isMenuOpen">
+        <div class="menu-window" ng-class="{'ng-hide': !isMenuOpen, 'ng-show': isMenuOpen}">
             <ul>
                 <li><p class="menu-item" ng-click="closeMenu()">Close Menu</p></li>
                 <li><p class="menu-item" ng-click="exitGame()">Exit</p></li>
@@ -28,7 +35,7 @@
                 <li><p class="menu-item" ng-click="openRulesDialog()">How to Play</p></li>
             </ul>
         </div>
-        <div class="chat-window" ng-show="isChatWindowOpen">
+        <div class="chat-window" ng-class="{'ng-hide': !isChatWindowOpen, 'ng-show': isChatWindowOpen}">
             <header ng-click="closeChat()">CLOSE CHAT</header>
             <ul id="chat-list">
                 <li ng-repeat="chat in chats">
@@ -104,7 +111,7 @@
         <script type="text/ng-template" id="table.bet.html">
             <div class="bet-info">
                 <div class="bet alert">
-                    <span class="pot-amount"><i class="fa fa-rupee"></i> {{table.amount | number}} </span>
+                <span class="pot-amount"><i class="fa fa-rupee"></i> {{table.amount ? table.amount : 0 }} </span>
                 </div>
             </div>
         </script>
@@ -125,7 +132,7 @@
                             <span class="value max-bet"><i class="fa fa-rupee"></i> {{table.maxBet | number}} </span>
                         </p>
                         <p class="no-border">
-                            <a href="javascript:void(0);" class="btn-main" ng-click="function(){$parent.tableInfoOpen = false;}">CLOSE</a>
+                            <a href="javascript:void(0);" class="btn-main" ng-click="close()">CLOSE</a>
                         </p>
                     </div>
                 </div>
@@ -137,6 +144,13 @@
             </div>
         </script>
         <script type="text/ng-template" id="side.player.html">
+            <style type="text/css">
+                .player-{{player.playerInfo.id}}{
+                    {{(player.playerInfo.avatar.indexOf('character') == -1) ? player.playerInfo.avatar : ''}}
+                    background-size: {{(player.playerInfo.avatar.indexOf('character') == -1) ? 'cover' : 'inherit'}} !important;
+                    background-repeat: no-repeat;
+                }
+            </style>
             <div ng-class="{winner:player.winner,turn:player.turn,packed:player.packed,active:player.active,inactive:!player.active,noplayer:!player}" class="side-player-outer" ng-click="share()">
                 <div class="side-player-container">
                     <input type="text" class="side-player-id" value="{{player.playerInfo.id}}" readonly/>
@@ -145,7 +159,7 @@
                     <div ng-show="!player" class="invite"> <span class="icon icon-md users"></span><span class="text">Invite Friend</span></div>
                     <div ng-show="player" class="player-info">
                         <div class="last-action">{{player.lastAction}}</div>
-                        <div class="pic" ng-class="playerAvatarClass(player)"></div>
+                        <div class="pic player-{{player.playerInfo.id}}" ng-class="playerAvatarClass(player)"></div>
                         <div slot="{{player.slot}}" class="name">{{ player.playerInfo.displayName}}</div>
                         <div class="last-bet"><i class="fa fa-rupee"></i> {{ player.lastBet || player.playerInfo.chips | number}}</div>
                     </div>
@@ -156,6 +170,13 @@
             </div>
         </script>
         <script type="text/ng-template" id="main.player.html">
+            <style type="text/css">
+            .player-{{player.playerInfo.id}}{
+                {{(player.playerInfo.avatar.indexOf('character') == -1) ? player.playerInfo.avatar : ''}}
+                background-size: {{(player.playerInfo.avatar.indexOf('character') == -1) ? 'cover' : 'inherit'}} !important;
+                background-repeat: no-repeat;
+            }
+            </style>
             <div ng-class="{winner:player.winner,turn:player.turn,packed:player.packed,active:player.active,inactive:!player.active}" class="current-player-outer">
                 <div class="current-player">
                     <input type="text" class="current-player-id" value="{{player.playerInfo.id}}"readonly/>
@@ -165,7 +186,7 @@
                         <div class="text-info">
                             <span slot="{{player.slot}}" class="name">{{player.playerInfo.displayName}}</span>
                         </div>
-                        <div class="pic" ng-class="playerAvatarClass(player)"></div>
+                        <div class="pic player-{{player.playerInfo.id}}" ng-class="playerAvatarClass(player)" ></div>
                         <div class="text-info">
                             <span class="chips"><i class="fa fa-rupee"></i> {{player.playerInfo.chips | number}}</span>
                             <div class="last-action">{{player.lastAction}}</div>

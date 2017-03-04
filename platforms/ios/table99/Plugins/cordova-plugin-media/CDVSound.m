@@ -475,7 +475,8 @@
         audioFile.player.mediaId = mediaId;
         audioFile.player.delegate = self;
         if (avPlayer == nil)
-            bError = ![audioFile.player prepareToPlay];
+            //bError = ![audioFile.player prepareToPlay];
+            bError = YES;
     }
     return bError;
 }
@@ -654,7 +655,7 @@
 #pragma unused(callbackId)
 
     NSString* mediaId = [command argumentAtIndex:0];
-    CDVAudioFile* audioFile = [self audioFileForResource:[command argumentAtIndex:1] withId:mediaId doValidation:YES forRecording:YES];
+    CDVAudioFile* audioFile = [self audioFileForResource:[command argumentAtIndex:1] withId:mediaId doValidation:YES forRecording:NO];
     __block NSString* jsString = nil;
     __block NSString* errorMsg = @"";
 

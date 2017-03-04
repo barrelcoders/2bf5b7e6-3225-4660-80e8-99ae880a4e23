@@ -305,6 +305,7 @@
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = BN2RYFWTFX;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -437,6 +438,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.projects.table99;
 				PRODUCT_NAME = Table99;
+				PROVISIONING_PROFILE = "73e3559f-46d2-4876-8596-af32f9a5c12c";
+				PROVISIONING_PROFILE_SPECIFIER = "Table99 Profile";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -450,6 +453,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = BN2RYFWTFX;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -466,6 +470,8 @@
 				INFOPLIST_FILE = "table99/table99-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.projects.table99;
 				PRODUCT_NAME = Table99;
+				PROVISIONING_PROFILE = "73e3559f-46d2-4876-8596-af32f9a5c12c";
+				PROVISIONING_PROFILE_SPECIFIER = "Table99 Profile";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

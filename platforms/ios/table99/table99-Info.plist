@@ -31,7 +31,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb217009365372523</string>
+				<string>fb819967424810603</string>
 			</array>
 		</dict>
 		<dict>
@@ -44,7 +44,7 @@
 	<key>CFBundleVersion</key>
 	<string>0.0.1</string>
 	<key>FacebookAppID</key>
-	<string>217009365372523</string>
+	<string>819967424810603</string>
 	<key>FacebookDisplayName</key>
 	<string>“Table99”</string>
 	<key>LSApplicationQueriesSchemes</key>
