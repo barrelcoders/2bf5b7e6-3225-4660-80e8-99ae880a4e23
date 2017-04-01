@@ -1101,18 +1101,32 @@ audio{
     width: 450px;
 }
 .bonus-container {
-    background: rgba(0,0,0,0.5);
-    font-size: 50px;
-    border-radius: 10px;
-    padding: 10px;
-    color: #FFF;
-    border: 2px solid #666;
+    font-size: 40px;
     cursor: pointer;
     width: 250px;
     text-align: center;
+    position: fixed;
+    bottom: 10px;
+    left: -40px;
+    z-index: 10;
 }
-.bonus-container.large{
-    width: 400px;
+.bonus-container button{
+    background: rgba(0,0,0,.5);
+    color: #FFF;
+    border: 2px solid #666;
+    border-radius: 10px;
+    padding: 10px;
+    height: 50px;
+    line-height: 30px;
+    font-family: BauhausStdBold;
+}
+.bonus-container span{
+    line-height: 35px;
+    display: block;
+    margin-top: -10px;
+    min-width: 250px;
+    color: #FFF;
+    font-weight: normal;
 }
 .user-avatar{
   position: absolute;
@@ -1804,6 +1818,23 @@ md-dialog h2{
   text-align: center;
   margin: 0;
 }
+md-dialog.bonus-dialog{
+    height: 350px;
+}
+md-dialog.bonus-dialog md-dialog-content{
+    top: 80px;
+    padding: 0 60px;
+}
+md-dialog.bonus-dialog md-dialog-content form{
+    font-size: 20px;
+    background: url(../images/3-coins.png) 10px 20px no-repeat;
+    background-size: 100px 100px;
+    padding-left: 150px;
+}
+md-dialog.bonus-dialog md-dialog-content form .btn-main{
+    display: inline-block;
+    min-width: 100px;
+}
 #loading-bar .bar{
     background: none;
 }
@@ -2170,23 +2201,26 @@ md-dialog h2{
     }
     .bonus-container{
         font-size: 20px;
-        border-radius: 5px;
-        width: 200px;
+        width: 100px;
         position: fixed;
-        bottom: 5px;
+        bottom: 10px;
         left: 5px;
-        height: 40px;
-        z-index: 80;
+        height: 60px;
+        z-index: 10;
     }
-    .bonus-container.large{
-        width: 200px;
+    .bonus-container button{
+        height: 35px;
+        font-size: 20px;
+        line-height: 15px;
+        border-radius: 5px;
     }
     .bonus-container span{
         line-height: 35px;
         display: block;
         height: 35px;
-        margin-top: -10px;
+        margin-top: -5px;
         min-width: 100px;
+        font-size: 15px;
     }
     md-dialog .btn-main{
         display: block;
@@ -2261,6 +2295,12 @@ md-dialog h2{
     }
     md-dialog.rules-dialog {
         overflow: hidden;
+    }
+    md-dialog.bonus-dialog md-dialog-content{
+        top: 50px;
+    }
+    md-dialog.bonus-dialog md-dialog-content form{
+        font-size: 13px;
     }
     .table .table-info{
         top: 40px;

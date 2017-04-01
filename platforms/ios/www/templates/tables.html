@@ -35,10 +35,10 @@
             </div>
         </form>
     </div>
-    <button type="button" class="bonus-container" ng-class="{'large': bonusCredited}" ng-click="creditBonus()">
-        <span class="amount" ng-if="!bonusCredited" ><i class="fa fa-rupee"></i> {{bonusObj.bonus}}</span>
-        <span class="time" ng-if="bonusCredited" ><i class="fa fa-clock-o"></i> {{nextBonusDateString}}</span>
-    </button>
+    <div class="bonus-container">
+        <span class="time" ><i class="fa fa-clock-o"></i> {{nextBonusDateShortString}}</span>
+        <button  ng-click="openBonusDialog()">Bonus</button>
+    </div>
     <div class="left-cards"></div>
     <div class="bottom-cards"></div>
     <div class="top-coin"></div>

@@ -67,6 +67,14 @@ angular.module('table99', [
                 };
             }
         });
+        $mdDialogProvider.addPreset('bonus', {
+            options: function() {
+                return {
+                    templateUrl:"templates/bonusDialog.html",
+                    controller: 'bonusDialogCtrl',
+                };
+            }
+        });
 
         $urlRouterProvider.otherwise("/home");
 
@@ -1099,13 +1107,12 @@ angular.module('table99.controllers').controller('tablesCtrl', ['$rootScope', '$
     function($rootScope, $localStorage, $scope, tableService, $state, layoutService, soundService, $mdDialog, userService, $interval, $window) {
         $rootScope.layout = layoutService.layoutClass.gameLayout;
         $scope.bonusObj = {};
-        $scope.bonusCredited = false;
         $scope.background = '';
         $scope.user = {};
         $scope.tables = [];
         $scope.customTables = [];
         $scope.isLoading = false;
-        $scope.nextBonusDateString = '0h 0m 0s';
+        $scope.nextBonusDateShortString = '0 hrs';
 
         if($localStorage){
             if(!$localStorage.USER){
@@ -1178,6 +1185,18 @@ angular.module('table99.controllers').controller('tablesCtrl', ['$rootScope', '$
                 })
             );
         };
+        $scope.openBonusDialog = function($event){
+            soundService.alert();
+            $mdDialog.show(
+                $mdDialog.bonus({
+                    scope: $scope,
+                    preserveScope: true,
+                    parent: angular.element(document.body),
+                    targetEvent: $event,
+                    locals: {},
+                })
+            );
+        };
 
         $scope.slickConfig = {
             variableWidth: true,
@@ -1238,83 +1257,7 @@ angular.module('table99.controllers').controller('tablesCtrl', ['$rootScope', '$
             soundService.buttonClick();
             $state.go('createTable',{});
         };
-        $scope.creditBonus = function(){
-            if($scope.bonusCredited)
-                return;
-            
-            userService.creditBonus({
-                user: $scope.user.id,
-                bonus: $scope.bonusObj.bonus
-            }).success(function(res) {
-                if (res.status == 'success') {
-                    $scope.bonusObj = res.data;
-                    userService.updateBalance({
-                        id: $scope.user.id,
-                        chips: $scope.user.chips + $scope.bonusObj.amount
-                    }).success(function(res) {
-                        if (res.status == 'success') {
-                            alert('Bonus successfully credited in your account');
-                            if($localStorage.USER){
-                                var localStorageData = $localStorage.USER;
-                                localStorageData.chips = res.data.chips;
-                                $localStorage.USER = localStorageData;
-                            }
-                            $scope.user.chips = res.data.chips;
-                            var nextDate = moment($scope.bonusObj.received).add('days', 1).unix(),
-                               currentDate = moment().unix(),
-                               diffTime = nextDate - currentDate,
-                               duration = moment.duration(diffTime * 1000, 'milliseconds');
-                            
-                            var interval = $interval(function() {
-                                duration = moment.duration(duration.asMilliseconds() - 1000, 'milliseconds');
-                                var d = moment.duration(duration).days(),
-                                h = moment.duration(duration).hours(),
-                                m = moment.duration(duration).minutes(),
-                                s = moment.duration(duration).seconds();
-                                                     
-                                d = $.trim(d).length === 1 ? '0' + d : d;
-                                h = $.trim(h).length === 1 ? '0' + h : h;
-                                m = $.trim(m).length === 1 ? '0' + m : m;
-                                s = $.trim(s).length === 1 ? '0' + s : s;
-                                                                                                                                                                 
-                                $scope.nextBonusDateString = parseInt(h)+"h "+parseInt(m)+"m "+parseInt(s)+"s";
-                                                     
-                                var remainingSeconds = duration.asSeconds();
-                                if(remainingSeconds == 0){
-                                    $interval.cancel(interval);
-                                    $scope.bonusCredited = false;
-                                }
-                                if(remainingSeconds < 0){
-                                    $interval.cancel(interval);
-                                    userService.updateBonusTime({
-                                        user: $scope.user.id
-                                    }).success(function(res) {
-                                        if (res.status == 'success') {
-                                            $state.reload();
-                                        }
-                                        if (res.status == 'failed') {
-                                            if(res.message == "PROBLEM_UPDATING_BONUS_TIME"){}
-                                        }
-                                    });
-                                }
-                            }, 1000);
-                            $scope.bonusCredited = true;
-                        }
-                        if (res.status == 'failed') {
-                            if(res.message == "PROBLEM_UPDATING_BALANCE"){
-                                alert("Problem in crediting bonus, Please try again later");
-                            }
-                        }
-                    })
-                }
-                if (res.status == 'failed') {
-                    if(res.message == 'PROBLEM_CREDITING_BONUS'){
-                        alert("Problem in crediting bonus, Please try again later");
-                    }
-                }
-            });
-        };
-
+        
         findTables();
         findBonus();
 
@@ -1369,7 +1312,16 @@ angular.module('table99.controllers').controller('tablesCtrl', ['$rootScope', '$
                 user: $scope.user.id
             }).success(function(res) {
                 if (res.status == 'success') {
+                    soundService.alert();
                     $scope.bonusObj = res.data;
+                    $mdDialog.show(
+                        $mdDialog.bonus({
+                            scope: $scope,
+                            preserveScope: true,
+                            parent: angular.element(document.body),
+                            locals: {},
+                        })
+                    );
                 }
                 if (res.status == 'failed') {
                     if(res.message == 'PROBLEM_FETCHING_BONUS'){
@@ -1393,29 +1345,23 @@ angular.module('table99.controllers').controller('tablesCtrl', ['$rootScope', '$
                             m = $.trim(m).length === 1 ? '0' + m : m;
                             s = $.trim(s).length === 1 ? '0' + s : s;
                                             
-                            $scope.nextBonusDateString = parseInt(h)+"h "+parseInt(m)+"m "+parseInt(s)+"s";
+                            $scope.nextBonusDateShortString = parseInt(h)+" hrs ";
                                                 
                             var remainingSeconds = duration.asSeconds();
-                            if(remainingSeconds == 0){
-                                $interval.cancel(interval);
-                                $scope.bonusCredited = false;
-                            }
-                            if(remainingSeconds < 0){
-                                $interval.cancel(interval);
-                                userService.updateBonusTime({
-                                    user: $scope.user.id
-                                }).success(function(res) {
-                                    if (res.status == 'success') {
-                                        $state.reload();
-                                    }
-                                    if (res.status == 'failed') {
-                                        if(res.message == "PROBLEM_UPDATING_BONUS_TIME"){}
-                                    }
-                                });
+                            if(remainingSeconds <= 0){
+                                soundService.alert();
+                                $mdDialog.show(
+                                    $mdDialog.bonus({
+                                        scope: $scope,
+                                        preserveScope: true,
+                                        parent: angular.element(document.body),
+                                        targetEvent: $event,
+                                        locals: {},
+                                    })
+                                );
                             }
                             
                         }, 1000);
-                    $scope.bonusCredited = true;
                 }
             }
         });
@@ -3320,4 +3266,133 @@ angular.module('table99.controllers').controller('rulesDialogCtrl', ['$rootScope
              soundService.buttonClick();
              $mdDialog.hide();
          };
+}]);
+angular.module('table99.controllers').controller('bonusDialogCtrl', ['$rootScope', '$scope', '$state', '$localStorage', 'soundService', 'userService', '$mdDialog', '$interval',
+    function($rootScope, $scope, $state, $localStorage, soundService, userService, $mdDialog, $interval) {
+        $scope.nextBonusDateString = '0h 0m 0s';
+        $scope.bonusCredited = false;
+        $scope.bonusObj = {};
+        $scope.user = {};
+                                                                    
+        if($localStorage){
+            if(!$localStorage.USER){
+                $state.go('signin', {});
+            }
+            else{
+                $scope.user = $localStorage.USER;
+            }
+        }
+        else{
+            $state.go('signin', {});
+        }
+                                                                     
+        $scope.closeDialog = function(){
+            soundService.buttonClick();
+            $mdDialog.hide();
+        };
+        $scope.creditBonus = function(){
+            userService.creditBonus({
+                user: $scope.user.id,
+                bonus: $scope.bonusObj.bonus
+            }).success(function(res) {
+                if (res.status == 'success') {
+                    $scope.bonusObj = res.data;
+                    userService.updateBalance({
+                        id: $scope.user.id,
+                        chips: $scope.user.chips + $scope.bonusObj.amount
+                    }).success(function(res) {
+                        if (res.status == 'success') {
+                            alert('Bonus successfully credited in your account');
+                            $state.reload();
+                            if($localStorage.USER){
+                                var localStorageData = $localStorage.USER;
+                                localStorageData.chips = res.data.chips;
+                                $localStorage.USER = localStorageData;
+                            }
+                            $scope.user.chips = res.data.chips;
+                            var nextDate = moment($scope.bonusObj.received).add('days', 1).unix(),
+                                currentDate = moment().unix(),
+                                diffTime = nextDate - currentDate,
+                                duration = moment.duration(diffTime * 1000, 'milliseconds');
+                                                                                                                                             
+                                var interval = $interval(function() {
+                                    duration = moment.duration(duration.asMilliseconds() - 1000, 'milliseconds');
+                                    var d = moment.duration(duration).days(),
+                                        h = moment.duration(duration).hours(),
+                                        m = moment.duration(duration).minutes(),
+                                        s = moment.duration(duration).seconds();
+                                        d = $.trim(d).length === 1 ? '0' + d : d;
+                                        h = $.trim(h).length === 1 ? '0' + h : h;
+                                        m = $.trim(m).length === 1 ? '0' + m : m;
+                                        s = $.trim(s).length === 1 ? '0' + s : s;
+                                                                                                                                                                      
+                                    $scope.nextBonusDateString = parseInt(h)+"h "+parseInt(m)+"m "+parseInt(s)+"s";
+                                                                                                                                                                      
+                                    var remainingSeconds = duration.asSeconds();
+                                    if(remainingSeconds <= 0){
+                                        $interval.cancel(interval);
+                                        $scope.bonusCredited = false;
+                                    }
+                                 }, 1000);
+                                 $scope.bonusCredited = true;
+                              }
+                              if (res.status == 'failed') {
+                                 if(res.message == "PROBLEM_UPDATING_BALANCE"){
+                                    alert("Problem in crediting bonus, Please try again later");
+                                 }
+                              }
+                           })
+                        }
+                        if (res.status == 'failed') {
+                           if(res.message == 'PROBLEM_CREDITING_BONUS'){
+                               alert("Problem in crediting bonus, Please try again later");
+                           }
+                        }
+                     });
+                  };
+                                                                     
+                  findBonus();
+                                                                     
+                  function findBonus(){
+                     userService.getBonus({
+                        user: $scope.user.id
+                     }).success(function(res) {
+                        if (res.status == 'success') {
+                            $scope.bonusObj = res.data;
+                        }
+                                                                                                     
+                        if (res.status == 'failed') {
+                            if(res.message == 'PROBLEM_FETCHING_BONUS'){}
+                            if(res.message == 'ALREADY_CREDITED'){
+                                $scope.bonusObj = res.data;
+                                $scope.bonusCredited = true;
+                                var nextDate = moment($scope.bonusObj.received).add('days', 1).unix(),
+                                    currentDate = moment().unix(),
+                                    diffTime = nextDate - currentDate,
+                                    duration = moment.duration(diffTime * 1000, 'milliseconds');
+                                                                                                     
+                                var interval = $interval(function() {
+                                    duration = moment.duration(duration.asMilliseconds() - 1000, 'milliseconds');
+                                    var d = moment.duration(duration).days(),
+                                        h = moment.duration(duration).hours(),
+                                        m = moment.duration(duration).minutes(),
+                                        s = moment.duration(duration).seconds();
+                                                                                                                              
+                                        d = $.trim(d).length === 1 ? '0' + d : d;
+                                        h = $.trim(h).length === 1 ? '0' + h : h;
+                                        m = $.trim(m).length === 1 ? '0' + m : m;
+                                        s = $.trim(s).length === 1 ? '0' + s : s;
+                                                                                                                              
+                                    $scope.nextBonusDateString = parseInt(h)+"h "+parseInt(m)+"m "+parseInt(s)+"s";
+                                                                                                                              
+                                    var remainingSeconds = duration.asSeconds();
+                                    if(remainingSeconds <= 0){
+                                        $interval.cancel(interval);
+                                         $scope.bonusCredited = false;
+                                    }
+                                 }, 1000);
+                              }
+                          }
+                     });
+           }
 }]);
